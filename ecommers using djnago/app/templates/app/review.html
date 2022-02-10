@@ -1,0 +1,144 @@
+<style>
+    .products{
+        
+        display:grid;
+        grid-template-columns: repeat(4,1fr);
+        gap:2px;
+        font-size: 20px;
+     
+    }
+    .rev1{
+        margin-top:5px;
+        margin-bottom:-25px;
+    }
+    .rev2{
+        margin-top:5px;
+        margin-bottom:5px;
+    }
+    .rev3{
+        margin-top:5px;
+        margin-bottom:5px;
+    }
+    .bg{
+        background-color: #dad9d9;
+        color: #1d1a1a;
+    }
+    h1{
+        background-color: #786f82;
+        margin-top: -8px;
+        margin-bottom: -23px;
+
+    }
+    h2{
+
+    }
+</style>
+
+<center><h1>Product Details<h2></center>
+    
+<hr>
+<a href="http://127.0.0.1:8000/"><button>HOME PAGE</button>
+</a>
+
+<center>
+<h2>{{product.p_name}}</h2>
+<img src="{{product.image.url}}"  height="200"width="200px"/>
+
+<h2>{{product.brand}}</h2>
+<h4>{{product.description}}<h4>
+
+
+<center><h2>Reviews</h2></center>
+<hr>
+<div class="products">
+{% for rev in reviews %}
+<div class="bg">
+<h6 class="rev1">Name--{{rev.Reviewer}}<h6>
+<h6 class="rev2">Rating--{{rev.rating}}</h6>
+<h6 class="rev3">Comment--{{rev.comment}}</h6>
+{% comment %} <p>{{rev.review_at}}</p> {% endcomment %}
+</div>
+
+{% endfor %}
+</div>
+<hr>
+<center><h2>Write Your Reviews</h2></center>
+<style>
+    
+        .myForm {
+        font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+        font-size: 0.8em;
+        width: 30em;
+        padding: 1em;
+        }
+        
+        .myForm * {
+        box-sizing: border-box;
+        }
+        
+        .myForm label {
+        padding: 0;
+        font-weight: bold;
+        text-align: right;
+        display: block;
+        }
+        
+        .myForm input,
+        .myForm select,
+        .myForm textarea {
+        margin-left: 2em;
+        float: right;
+        width: 20em;
+        border: 1px solid #ccc;
+        font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+        font-size: 0.9em;
+        padding: 0.3em;
+        }
+        
+        .myForm textarea {
+        height: 100px;
+        }
+        
+        .myForm button {
+        padding: 1em;
+        border-radius: 0.5em;
+        background: #eee;
+        border: none;
+        font-weight: bold;
+        margin-left: 14em;
+        margin-top: 1.8em;
+        }
+        
+        .myForm button:hover {
+        background: #ccc;
+        cursor: pointer;
+        }
+    
+    </style>
+        
+<form class="myForm" method="post"  action="{% url 'app:comment' product.id %}" role="form">
+    {% csrf_token %}
+    <p>
+    <label>Name
+    <input type="text" name="reviewername" placeholder="name" required>
+    </label> 
+    </p>
+    <p>
+    <label>Rating 
+    <input type="number" name="reviewerrating" required>
+    </label>
+    {% comment %} </p>
+    <label>Date 
+        <input type="date" name="reviewdate" required>
+        </label>
+        </p>
+    <p> {% endcomment %}
+    <label>Comment 
+    <textarea name="reviewbody" maxlength="500"></textarea>
+    </label>
+    </p>
+    <button>Post</button>
+   </form>
+    
+    
+
